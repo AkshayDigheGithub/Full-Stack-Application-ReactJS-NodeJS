@@ -19,8 +19,8 @@ class ManagerSignComponent extends Component {
     render() {
         const { error } = this.state
         return (
-            <div>
-                <h1>Manager Signup</h1>
+            <div className="container">
+                <h1 className="text-info text-center">Manager Signup</h1>
                 {
                     error
                         ? <h1 classname="alert alert-danger">error{error}</h1>
@@ -149,15 +149,17 @@ class ManagerSignComponent extends Component {
                                                 </Form.Group>
                                             </Col>
                                         </Row>
-
-                                        <Button variant="primary" type="submit">Signup</Button>
+                                        <Row>
+                                            <Col>
+                                                <Button variant="primary" className="btn btn-block" type="submit">SIGNUP</Button>
+                                            </Col>
+                                        </Row>
                                     </Form>
                                 )}
                         </Formik>
                 }
-
-
-                <Button type="button" variant="danger" onClick={this.loginform}>Please Login </Button>
+                <br />
+                <Button type="button" className="btn btn-block" variant="danger" onClick={this.loginform}>SIGNIN</Button>
             </div>
         );
     }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Table, Button, Row, Col, Container, Modal, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
+import { addEmployee } from '../utils/services';
 
 class HomeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            users: null,
             show: false,
             isUpdate: false
         }
@@ -31,10 +33,18 @@ class HomeComponent extends Component {
             show: true
         })
     }
+    async componentWillMount() {
+        const response = await addEmployee()
+        this.setState({
+            users: response.data
+        })
+    }
+
     render() {
+        const { users } = this.state;
         return (
             <Container>
-                <h1>Employee List</h1>
+                <h1 className="text-info text-center">Employee List</h1>
                 <Row>
                     <Col md={{ span: 2, offset: 10 }}>
                         <Button className="" variant="primary" onClick={this.handleShow}>Add Employee</Button>
@@ -46,23 +56,17 @@ class HomeComponent extends Component {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>EMPID</th>
+                                    <th>City</th>
+                                    <th>DOB</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>
-                                        <button type="button" className="btn btn-sm btn-info" onClick={this.updateModal}>Update</button>&nbsp;
-                                        <button type="button" className="btn btn-sm btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                {
+                                    users ? <EmpList usersdata={this} /> : null
+                                }
                             </tbody>
                         </Table>
                     </Col>
@@ -75,12 +79,30 @@ class HomeComponent extends Component {
 }
 
 
+function EmpList(props) {
+    const { updateModal, state } = props.usersdata
+    const user = state.users
+    return user.map((i, index) => {
+        const { _id, firstname, lastname, empid, city, dob } = i;
+        return <tr key={index}>
+            <td>{_id}</td>
+            <td>{firstname} {lastname}</td>
+            <td>{empid}</td>
+            <td>{city}</td>
+            <td>{dob}</td>
+            <td>
+                <button type="button" className="btn btn-sm btn-info" onClick={updateModal}>Update</button>&nbsp;
+                <button type="button" className="btn btn-sm btn-danger">Delete</button>
+            </td>
+        </tr >
+    })
+}
+
+
 
 class ModalF extends Component {
-
     constructor(props) {
         super(props)
-
     }
     render() {
         const { state, handleClose } = this.props
@@ -113,11 +135,11 @@ class ModalF extends Component {
                         //     return errors;
                         // }}
                         onSubmit={(values, { setSubmitting }) => {
-                            console.log("values", values)
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
+                            // console.log("values", values)
+                            // setTimeout(() => {
+                            //     alert(JSON.stringify(values, null, 2));
+                            //     setSubmitting(false);
+                            // }, 400);
                         }}
                     >
                         {({

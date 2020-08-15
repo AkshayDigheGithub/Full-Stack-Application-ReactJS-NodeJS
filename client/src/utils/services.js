@@ -1,29 +1,67 @@
 import Axios from 'axios';
 
+const isloggedin = localStorage.getItem('user');
+console.log("****", isloggedin);
+const headers = {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "Authorization": `Bearer ${isloggedin}`
+}
+
 const BaseURL = 'http://localhost:4000/api/v1';
 
 const ManagerSignup = {
     url: '/manager/signin',
     method: 'post'
 }
+
 const ManagerLogin = {
     url: '/manager/login',
     method: 'post'
 }
 
-export const ManagerServices = (servicename, data) => {
-    switch (servicename) {
-        case 'signup':
-            signup(data, ManagerSignup)
-            break;
-        case 'login':
+const emp = {
+    url: '/employee'
+}
 
-            break;
+// export const ManagerServices = (servicename, data) => {
+//     switch (servicename) {
+//         case 'signup':
+//             signup(data, ManagerSignup)
+//             break;
+//         case 'login':
+//             login(data, ManagerLogin)
+//             break;
+//     }
+// }
+
+
+// signin
+export const signup = async (data) => {
+    const { url } = ManagerSignup
+    try {
+        return await Axios.post(`${BaseURL}${url}`, data)
+    } catch (error) {
+        return error
     }
 }
 
+// login 
+export const login = async (data) => {
+    const { url } = ManagerLogin
+    try {
+        return await Axios.post(`${BaseURL}${url}`, data);
+    } catch (error) {
+        return error
+    }
+}
 
-const signup = async (data, ManagerSignup) => {
-    const { url } = ManagerSignup
-    return await Axios.post(`${BaseURL}${url}`, data)
+// add employee
+export const addEmployee = async (data) => {
+    const { url } = emp
+    try {
+        return await Axios.get(`${BaseURL}${url}`, { headers });
+    } catch (error) {
+        return error
+    }
 }

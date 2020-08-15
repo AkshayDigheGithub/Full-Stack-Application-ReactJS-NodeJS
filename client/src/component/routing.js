@@ -13,6 +13,7 @@ import PrivateRoute from './privateRoute';
 
 
 export default function Main() {
+    const isLoggedIn = localStorage.getItem('user')
     return (
         <Router>
             <div>

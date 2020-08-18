@@ -41,7 +41,6 @@ class ManagerLoginComponent extends Component {
                         onSubmit={(values, { setSubmitting }) => {
                             login(values)
                                 .then(response => {
-                                    console.log("responseresponseresponse", response.data.token);
                                     if (response.status === 200) {
                                         localStorage.setItem("user", response.data.token)
                                         this.props.history.push('/')

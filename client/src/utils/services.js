@@ -24,17 +24,6 @@ const emp = {
     url: '/employee'
 }
 
-// export const ManagerServices = (servicename, data) => {
-//     switch (servicename) {
-//         case 'signup':
-//             signup(data, ManagerSignup)
-//             break;
-//         case 'login':
-//             login(data, ManagerLogin)
-//             break;
-//     }
-// }
-
 
 // signin
 export const signup = async (data) => {
@@ -57,10 +46,20 @@ export const login = async (data) => {
 }
 
 // add employee
-export const addEmployee = async (data) => {
+export const addEmployee = async () => {
     const { url } = emp
     try {
         return await Axios.get(`${BaseURL}${url}`, { headers });
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const updateEmployee = async (data) => {
+    const { url } = emp
+    try {
+        return await Axios.put(`${BaseURL}${url}`, data, { headers });
     } catch (error) {
         return error
     }

@@ -34,17 +34,17 @@ class ManagerSignComponent extends Component {
                                 dob: '',
                                 company: ''
                             }}
-                            // validate={values => {
-                            //     const errors = {};
-                            //     if (!values.email) {
-                            //         errors.email = 'Required';
-                            //     } else if (
-                            //         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                            //     ) {
-                            //         errors.email = 'Invalid email address';
-                            //     }
-                            //     return errors;
-                            // }}
+                            validate={values => {
+                                const errors = {};
+                                if (!values.email) {
+                                    errors.email = 'Required';
+                                } else if (
+                                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                                ) {
+                                    errors.email = 'Invalid email address';
+                                }
+                                return errors;
+                            }}
                             onSubmit={(values, { setSubmitting }) => {
                                 signup(values)
                                     .then(response => {
@@ -151,7 +151,10 @@ class ManagerSignComponent extends Component {
                                         </Row>
                                         <Row>
                                             <Col>
-                                                <Button variant="primary" className="btn btn-block" type="submit">SIGNUP</Button>
+                                                <Button variant="primary" className="btn btn-sm btn-block" type="submit">SIGNUP</Button>
+                                            </Col>
+                                            <Col>
+                                                <Button type="button" className="btn btn-sm btn-block" variant="danger" onClick={this.loginform}>SIGNIN</Button>
                                             </Col>
                                         </Row>
                                     </Form>
@@ -159,7 +162,7 @@ class ManagerSignComponent extends Component {
                         </Formik>
                 }
                 <br />
-                <Button type="button" className="btn btn-block" variant="danger" onClick={this.loginform}>SIGNIN</Button>
+
             </div>
         );
     }

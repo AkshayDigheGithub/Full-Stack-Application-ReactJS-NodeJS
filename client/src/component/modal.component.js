@@ -1,20 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
-
-// const DatePickerField = ({ name, value, onChange }) => {
-//     return (
-//         <Calendar
-//             selected={(value && new Date(value)) || null}
-//             onChange={val => {
-//                 onChange(name, val);
-//             }}
-//         />
-//     );
-// };
 
 class ModalF extends Component {
     constructor(props) {

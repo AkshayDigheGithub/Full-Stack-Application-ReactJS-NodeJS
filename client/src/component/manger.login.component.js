@@ -21,7 +21,7 @@ class ManagerLoginComponent extends Component {
             <>
                 {isloggedin ? this.props.history.push('/') : null}
                 < div >
-                    <h1 className="text-center">Manager Login</h1>
+                    <h1 className="text-info text-center">Manager Login</h1>
                     {
                         error ? <h1 className="alert alert-danger">error {error}</h1> : null
                     }
@@ -93,11 +93,19 @@ class ManagerLoginComponent extends Component {
                                         </Col>
                                     </Row>
 
-                                    <Button variant="primary" type="submit">Login</Button>
+                                    <Row>
+                                        <Col>
+                                            <Button variant="primary" className="btn btn-sm btn-block" type="submit">Login</Button>
+                                        </Col>
+                                        <Col>
+                                            <Button type="button" className="btn btn-sm btn-block" variant="danger" onClick={this.signupform}>Please signup </Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )}
                     </Formik>
-                    <Button type="button" className="text-center" variant="danger" onClick={this.signupform}>Please signup </Button>
+
                 </div >
             </>
         );

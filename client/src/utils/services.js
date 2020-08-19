@@ -2,7 +2,7 @@ import Axios from 'axios';
 const BaseURL = 'http://localhost:4000/api/v1';
 
 const token = localStorage.getItem('user');
-console.log("****", token);
+
 const headers = {
     "content-type": "application/json",
     "accept": "application/json",
@@ -45,7 +45,7 @@ export const login = async (data) => {
     }
 }
 
-
+// get employee list
 export const getAllEmployeeList = async () => {
     const { url } = emp
     try {
@@ -65,7 +65,7 @@ export const addEmployee = async (data) => {
     }
 }
 
-
+// update employee record
 export const updateEmployee = async (data) => {
     const { url } = emp
     try {
@@ -75,7 +75,7 @@ export const updateEmployee = async (data) => {
     }
 }
 
-
+// delete employee by id
 export const deleteEmployee = async (data) => {
     console.log("headers", headers, data);
     const { url } = emp

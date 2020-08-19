@@ -7,7 +7,7 @@ class HomeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: null,
+            users: {},
             show: false,
             isUpdate: false,
             singleUser: {}
@@ -79,9 +79,9 @@ class HomeComponent extends Component {
     }
 
     async componentWillMount() {
-        const response = await getAllEmployeeList()
+        const { data = {} } = await getAllEmployeeList()
         this.setState({
-            users: response.data
+            users: data
         })
     }
 
@@ -114,7 +114,7 @@ class HomeComponent extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    users ? <EmpList usersdata={this} /> : null
+                                    Object.keys(users).length > 0 ? <EmpList usersdata={this} /> : null
                                 }
                             </tbody>
                         </Table>

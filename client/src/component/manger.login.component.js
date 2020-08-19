@@ -19,7 +19,8 @@ class ManagerLoginComponent extends Component {
         const isloggedin = localStorage.getItem('user');
         return (
             <>
-                {isloggedin ? this.props.history.push('/') : null}
+                {
+                    isloggedin ? this.props.history.push('/') : null}
                 < div >
                     <h1 className="text-info text-center">Manager Login</h1>
                     {
@@ -27,17 +28,6 @@ class ManagerLoginComponent extends Component {
                     }
                     <Formik
                         initialValues={{ email: '', password: '' }}
-                        // validate={values => {
-                        // const errors = {};
-                        // if (!values.email) {
-                        //     errors.email = 'Required';
-                        // } else if (
-                        //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                        // ) {
-                        //     errors.email = 'Invalid email address';
-                        // }
-                        // return errors;
-                        // }}
                         onSubmit={(values, { setSubmitting }) => {
                             login(values)
                                 .then(response => {
@@ -63,8 +53,6 @@ class ManagerLoginComponent extends Component {
                             handleChange,
                             handleBlur,
                             handleSubmit,
-                            isSubmitting,
-                            /* and other goodies */
                         }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <Row>
@@ -105,7 +93,6 @@ class ManagerLoginComponent extends Component {
                                 </Form>
                             )}
                     </Formik>
-
                 </div >
             </>
         );

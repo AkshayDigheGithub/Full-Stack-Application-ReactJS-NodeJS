@@ -13,7 +13,8 @@ EmployeeRouter
 
 async function getEmployeeList(req, res) {
     try {
-        const response = await Employee.find(req.body);
+        const filter = { 'managerId': req.managerDetails }
+        const response = await Employee.find(filter);
         res.status(200).send(response)
     } catch (error) {
         res.send(error)

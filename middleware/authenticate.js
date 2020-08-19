@@ -27,6 +27,7 @@ async function authentication(req, res, next) {
             res.send("not authenticated")
         }
         req.managerDetails = managerResponse._id;
+        console.log("req.managerDetails", req.managerDetails);
         next()
     } catch (error) {
         res.send(error)

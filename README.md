@@ -24,7 +24,7 @@ Dev-packages
  1. Clone Project on your local machine.
  2. Change directory to project
  3. hit > $ npm Install command
- 4. run > $ npm run server (this will install client as well as server npm packages and will start development server)
+ 4. run > $ npm run dev (this will install client as well as server npm packages and will start development server)
  
 
 # API LIST

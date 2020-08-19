@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Row, Col, Container, Modal, Form } from 'react-bootstrap';
-import { Formik } from 'formik';
+import { Table, Button, Row, Col, Container } from 'react-bootstrap';
 import { getAllEmployeeList, updateEmployee, addEmployee, deleteEmployee } from '../utils/services';
 import ModalF from './modal.component';
 
@@ -64,7 +63,6 @@ class HomeComponent extends Component {
     }
 
     deleteEmployee = async (e, data) => {
-        console.log("***", e.target);
         await deleteEmployee(data)
         const response = await getAllEmployeeList()
         this.setState({
@@ -73,6 +71,7 @@ class HomeComponent extends Component {
             users: response.data
         })
     }
+
     // logout 
     logout = () => {
         localStorage.clear();
@@ -135,7 +134,7 @@ function EmpList(props) {
     const { openUpdateModal, state, deleteEmployee } = props.usersdata
     const user = state.users
     return user.map((i, index) => {
-        const { _id, firstname, lastname, empid, city, dob } = i;
+        const { firstname, lastname, empid, city, dob } = i;
         return <tr key={index}>
             <td>{index + 1}</td>
             <td>{firstname} {lastname}</td>
@@ -144,7 +143,7 @@ function EmpList(props) {
             <td>{dob}</td>
             <td>
                 <button type="button" className="btn btn-sm btn-info" onClick={e => openUpdateModal(e, i)}>Update</button>&nbsp;
-                <button type="button" className="btn btn-sm btn-danger" onClick={e => deleteEmployee(e, i)}>Delete</button>
+                <button type="button" className="btn btn-sm btn-danger" onClick={e => { if (window.confirm('Delete the item?')) deleteEmployee(e, i) }}>Delete</button>
             </td >
         </tr >
     })

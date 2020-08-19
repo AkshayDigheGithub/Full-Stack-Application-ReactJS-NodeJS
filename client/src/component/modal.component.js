@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 
+const initialValues = {
+    firstname: "",
+    lastname: "",
+    empid: "",
+    addres: "",
+    city: "",
+    mobile: "",
+    dob: new Date()
+}
 
 class ModalF extends Component {
     constructor(props) {
@@ -17,26 +26,7 @@ class ModalF extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
-                        initialValues={singleUser || { firstname: "", lastname: "", empid: "", addres: "", city: "", mobile: "", dob: new Date() }}
-                        validate={values => {
-                            const errors = {};
-
-                            if (!values.city) {
-                                errors.city = 'Required';
-                            } else if (
-                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.city)
-                            ) {
-                                errors.city = 'Invalid city address';
-                            }
-                            return errors;
-                        }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            // console.log("values", values)
-                            // setTimeout(() => {
-                            //     alert(JSON.stringify(values, null, 2));
-                            //     setSubmitting(false);
-                            // }, 400);
-                        }}
+                        initialValues={singleUser || initialValues}
                     >
                         {({
                             values,
@@ -44,9 +34,7 @@ class ModalF extends Component {
                             touched,
                             handleChange,
                             handleBlur,
-                            handleSubmit,
-                            isSubmitting,
-                            /* and other goodies */
+                            handleSubmit
                         }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <Row>
@@ -138,7 +126,9 @@ class ModalF extends Component {
                                     <Button
                                         variant="primary"
                                         type="submit"
-                                        onClick={e => { isUpdate ? updateUserData(values) : addUserData(values) }}
+                                        onClick={e => {
+                                            if (IsCheck(isUpdate)) { isUpdate ? updateUserData(values) : addUserData(values) }
+                                        }}
                                     >{isUpdate ? 'Update' : 'Add'} Employee Details</Button>
                                 </Form>
                             )}
@@ -150,6 +140,11 @@ class ModalF extends Component {
             </Modal >
         )
     }
+}
+
+function IsCheck(isUpdate) {
+    const msg = isUpdate ? 'Update the employee details' : 'Add the employee details'
+    return window.confirm(msg)
 }
 
 export default ModalF;

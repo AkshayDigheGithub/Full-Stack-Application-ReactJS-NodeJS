@@ -12,10 +12,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
     // Add your own authentication on the below line.
     const isLoggedIn = localStorage.getItem('user')
-    console.log("***", isLoggedIn);
-    // const isLoggedIn = AuthService.isLoggedIn() 
-
-
 
     return (
         <Route

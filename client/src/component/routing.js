@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import ManagerSignComponent from './manager.sign.component';
 import HomeComponent from './home.component';
@@ -13,7 +12,7 @@ import PrivateRoute from './privateRoute';
 
 
 export default function Main() {
-    const isLoggedIn = localStorage.getItem('user')
+    // const isLoggedIn = localStorage.getItem('user')
     return (
         <Router>
             <div>

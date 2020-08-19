@@ -98,7 +98,7 @@ class ManagerLoginComponent extends Component {
                                             <Button variant="primary" className="btn btn-sm btn-block" type="submit">Login</Button>
                                         </Col>
                                         <Col>
-                                            <Button type="button" className="btn btn-sm btn-block" variant="danger" onClick={this.signupform}>Please signup </Button>
+                                            <Button type="button" className="btn btn-sm btn-block" variant="info" onClick={this.signupform}>Please signup </Button>
                                         </Col>
                                     </Row>
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, Row, Col, Container, Modal, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { addEmployee, updateEmployee } from '../utils/services';
+import { getAllEmployeeList, updateEmployee, addEmployee, deleteEmployee } from '../utils/services';
 import ModalF from './modal.component';
 
 class HomeComponent extends Component {
@@ -17,6 +17,8 @@ class HomeComponent extends Component {
         this.handleShow = this.handleShow.bind(this)
         this.logout = this.logout.bind(this)
         this.updateUserData = this.updateUserData.bind(this)
+        this.addUserData = this.addUserData.bind(this)
+        this.deleteEmployee = this.deleteEmployee.bind(this)
     }
     handleClose = () => {
         this.setState({
@@ -43,7 +45,7 @@ class HomeComponent extends Component {
 
     updateUserData = async (data) => {
         await updateEmployee(data)
-        const response = await addEmployee()
+        const response = await getAllEmployeeList()
         this.setState({
             show: false,
             isUpdate: false,
@@ -51,6 +53,26 @@ class HomeComponent extends Component {
         })
     }
 
+    addUserData = async (data) => {
+        await addEmployee(data)
+        const response = await getAllEmployeeList()
+        this.setState({
+            show: false,
+            isUpdate: false,
+            users: response.data
+        })
+    }
+
+    deleteEmployee = async (e, data) => {
+        console.log("***", e.target);
+        await deleteEmployee(data)
+        const response = await getAllEmployeeList()
+        this.setState({
+            show: false,
+            isUpdate: false,
+            users: response.data
+        })
+    }
     // logout 
     logout = () => {
         localStorage.clear();
@@ -58,7 +80,7 @@ class HomeComponent extends Component {
     }
 
     async componentWillMount() {
-        const response = await addEmployee()
+        const response = await getAllEmployeeList()
         this.setState({
             users: response.data
         })
@@ -110,7 +132,7 @@ class HomeComponent extends Component {
 
 
 function EmpList(props) {
-    const { openUpdateModal, state } = props.usersdata
+    const { openUpdateModal, state, deleteEmployee } = props.usersdata
     const user = state.users
     return user.map((i, index) => {
         const { _id, firstname, lastname, empid, city, dob } = i;
@@ -122,8 +144,8 @@ function EmpList(props) {
             <td>{dob}</td>
             <td>
                 <button type="button" className="btn btn-sm btn-info" onClick={e => openUpdateModal(e, i)}>Update</button>&nbsp;
-                <button type="button" className="btn btn-sm btn-danger">Delete</button>
-            </td>
+                <button type="button" className="btn btn-sm btn-danger" onClick={e => deleteEmployee(e, i)}>Delete</button>
+            </td >
         </tr >
     })
 }

@@ -1,14 +1,14 @@
 import Axios from 'axios';
+const BaseURL = 'http://localhost:4000/api/v1';
 
-const isloggedin = localStorage.getItem('user');
-console.log("****", isloggedin);
+const token = localStorage.getItem('user');
+console.log("****", token);
 const headers = {
     "content-type": "application/json",
     "accept": "application/json",
-    "Authorization": `Bearer ${isloggedin}`
+    "Authorization": `Bearer ${token}`
 }
 
-const BaseURL = 'http://localhost:4000/api/v1';
 
 const ManagerSignup = {
     url: '/manager/signin',
@@ -21,7 +21,7 @@ const ManagerLogin = {
 }
 
 const emp = {
-    url: '/employee'
+    url: '/employee/'
 }
 
 
@@ -45,11 +45,21 @@ export const login = async (data) => {
     }
 }
 
-// add employee
-export const addEmployee = async () => {
+
+export const getAllEmployeeList = async () => {
     const { url } = emp
     try {
         return await Axios.get(`${BaseURL}${url}`, { headers });
+    } catch (error) {
+        return error
+    }
+}
+
+// add employee
+export const addEmployee = async (data) => {
+    const { url } = emp
+    try {
+        return await Axios.post(`${BaseURL}${url}`, data, { headers });
     } catch (error) {
         return error
     }
@@ -60,6 +70,17 @@ export const updateEmployee = async (data) => {
     const { url } = emp
     try {
         return await Axios.put(`${BaseURL}${url}`, data, { headers });
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const deleteEmployee = async (data) => {
+    console.log("headers", headers, data);
+    const { url } = emp
+    try {
+        return await Axios.delete(`${BaseURL}${url}${data._id}`, { headers });
     } catch (error) {
         return error
     }

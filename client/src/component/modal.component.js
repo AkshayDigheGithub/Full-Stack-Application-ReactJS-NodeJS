@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
+
+// const DatePickerField = ({ name, value, onChange }) => {
+//     return (
+//         <Calendar
+//             selected={(value && new Date(value)) || null}
+//             onChange={val => {
+//                 onChange(name, val);
+//             }}
+//         />
+//     );
+// };
 
 class ModalF extends Component {
     constructor(props) {
         super(props)
     }
     render() {
-        const { state, handleClose, updateUserData } = this.props
+        const { state, handleClose, updateUserData, addUserData } = this.props
         const { isUpdate, show, singleUser } = state;
-        console.log("singleUser", singleUser);
         return (
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -17,18 +30,19 @@ class ModalF extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
-                        initialValues={singleUser || ''}
-                        // validate={values => {
-                        //     const errors = {};
-                        //     // if (!values.city) {
-                        //     //     errors.city = 'Required';
-                        //     // } else if (
-                        //     //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.city)
-                        //     // ) {
-                        //     //     errors.city = 'Invalid city address';
-                        //     // }
-                        //     return errors;
-                        // }}
+                        initialValues={singleUser || { firstname: "", lastname: "", empid: "", addres: "", city: "", mobile: "", dob: new Date() }}
+                        validate={values => {
+                            const errors = {};
+
+                            if (!values.city) {
+                                errors.city = 'Required';
+                            } else if (
+                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.city)
+                            ) {
+                                errors.city = 'Invalid city address';
+                            }
+                            return errors;
+                        }}
                         onSubmit={(values, { setSubmitting }) => {
                             // console.log("values", values)
                             // setTimeout(() => {
@@ -52,7 +66,7 @@ class ModalF extends Component {
                                         <Col>
                                             <Form.Group controlId="firstname">
                                                 <Form.Control
-                                                    type="firstname"
+                                                    type="text"
                                                     name="firstname"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -63,7 +77,7 @@ class ModalF extends Component {
                                         <Col>
                                             <Form.Group controlId="lastname">
                                                 <Form.Control
-                                                    type="lastname"
+                                                    type="text"
                                                     name="lastname"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -75,14 +89,14 @@ class ModalF extends Component {
 
                                     <Row>
                                         <Col>
-                                            <Form.Group controlId="address">
+                                            <Form.Group controlId="addres">
                                                 <Form.Control
-                                                    type="address"
-                                                    name="address"
+                                                    type="addres"
+                                                    name="addres"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.address}
-                                                    placeholder="address" />
+                                                    placeholder="addres" />
                                             </Form.Group>
                                         </Col>
                                         <Col>
@@ -93,7 +107,7 @@ class ModalF extends Component {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.dob}
-                                                    placeholder="dob" />
+                                                    placeholder="dd/mm/yyyy" />
                                             </Form.Group>
                                         </Col>
                                         <Col>
@@ -134,7 +148,11 @@ class ModalF extends Component {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Button variant="primary" type="submit" onClick={e => updateUserData(values)}>{isUpdate ? 'Update' : 'Add'} Employee Details</Button>
+                                    <Button
+                                        variant="primary"
+                                        type="submit"
+                                        onClick={e => { isUpdate ? updateUserData(values) : addUserData(values) }}
+                                    >{isUpdate ? 'Update' : 'Add'} Employee Details</Button>
                                 </Form>
                             )}
                     </Formik>
